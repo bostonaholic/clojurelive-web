@@ -7,6 +7,7 @@
                  [org.clojure/clojure "1.7.0-beta3"]
                  [compojure "1.3.4"]
                  [ring/ring-jetty-adapter "1.3.2"]
+                 [ring/ring-defaults "0.1.5"]
                  [hiccup "1.0.5"]
                  [postmark "1.1.0" :exclusions [org.clojure/clojure]]
                  [environ "1.0.0"]
