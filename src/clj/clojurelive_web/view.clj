@@ -6,12 +6,12 @@
    [:title "Clojure Live - Up-to-date news on Clojure, ClojureScript, and Datomic"]
    [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
 
-   (h/include-css "//css/vendor/normalize.css"
-                  "//css/vendor/bootstrap.min.css"
-                  "//css/flat-ui.min.css"
-                  "//css/main.css")
-   (h/include-js "//js/vendor/jquery.min.js"
-                 "//js/flat-ui.min.js")])
+   (h/include-css "/css/vendor/normalize.css"
+                  "/css/vendor/bootstrap.min.css"
+                  "/css/flat-ui.min.css"
+                  "/css/main.css")
+   (h/include-js "/js/vendor/jquery.min.js"
+                 "/js/flat-ui.min.js")])
 
 (def body
   [:body
@@ -39,7 +39,7 @@
    [:script {:type "text/javascript"}
     "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-62980400-1', 'auto');ga('send', 'pageview');"]
 
-   (h/include-js "//js/main.js")])
+   (h/include-js "/js/main.js")])
 
 (defn splash []
   (h/html5 [:html

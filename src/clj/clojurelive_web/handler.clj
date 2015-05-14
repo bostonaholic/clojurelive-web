@@ -19,4 +19,4 @@
 
 (def app
   (-> routes
-      (ring/wrap-defaults ring/secure-site-defaults)))
+      #_(ring/wrap-defaults ring/secure-site-defaults)))
