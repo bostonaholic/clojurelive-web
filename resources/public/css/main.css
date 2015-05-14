@@ -1,0 +1,33 @@
+#headline {
+  text-align: center;
+}
+
+#headline h1 {
+  font-size: 90px;
+}
+
+#headline small {
+  color: #95A5A6;
+  display: block;
+  font-size: 22px;
+  padding-top: 5px;
+}
+
+#main-subscribe-form {
+  margin-top: 100px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 400px;
+}
+
+#main-subscribe-form input[type="submit"] {
+  width: 100%;
+}
+
+footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.alizarin { color: #E74C3C; }
