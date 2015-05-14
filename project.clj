@@ -20,6 +20,7 @@
   :hooks [leiningen.cljsbuild]
   :main clojurelive-web.web
   :source-paths ["src/clj"]
+  :resource-paths ["resources"]
   :uberjar-name "clojurelive-web-standalone.jar"
   :profiles {:uberjar {:aot :all}}
   :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/js"]
