@@ -3,7 +3,7 @@
 
 (def api-token (get (System/getenv) "POSTMARK_API_TOKEN"))
 
-(def send-message (postmark api-token "no-reply@clojurelive.com"))
+(def send-message (postmark api-token "matthew@clojurelive.com"))
 
 (defn subscribe [email]
   (send-message {:to "subscribe@clojurelive.com"
