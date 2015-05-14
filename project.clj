@@ -22,12 +22,10 @@
   :uberjar-name "clojurelive-web-standalone.jar"
   :profiles {:uberjar {:aot :all}}
   :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/js"]
-  :cljsbuild {:builds {:dev {:source-paths ["src/cljs"]
-                             :compiler     {:output-to     "resources/public/js/main.js"
-                                            ;; :output-dir "resources/public/js/build-output-dev"
-                                            ;; :source-map "resources/public/js/main.js.map"
-                                            :optimizations :whitespace}}
-                       :minify {:source-paths ["src/cljs"]
-                                :compiler     {:output-to "resources/public/js/main.js"
-                                               :optimizations :advanced}
+  :cljsbuild {:builds {:dev {:compiler {:output-to     "resources/public/js/main.js"
+                                        ;; :output-dir "resources/public/js/build-output-dev"
+                                        ;; :source-map "resources/public/js/main.js.map"
+                                        :optimizations :whitespace}}
+                       :minify {:compiler {:output-to "resources/public/js/main.js"
+                                           :optimizations :advanced}
                                 :jar true}}})
