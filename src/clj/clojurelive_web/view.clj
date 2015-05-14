@@ -10,8 +10,8 @@
                   "/css/vendor/bootstrap.min.css"
                   "/css/flat-ui.min.css"
                   "/css/main.css")
-   (h/include-js "/js/vendor/jquery.min.js"
-                 "/js/flat-ui.min.js")])
+   (h/include-js "/vendor/js/jquery.min.js"
+                 "/vendor/js/flat-ui.min.js")])
 
 (def body
   [:body
