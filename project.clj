@@ -29,4 +29,5 @@
                                             :optimizations :whitespace}}
                        :minify {:source-paths ["src/cljs"]
                                 :compiler     {:output-to "resources/public/js/main.js"
-                                               :optimizations :advanced}}}})
+                                               :optimizations :advanced}
+                                :jar true}}})
