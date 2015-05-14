@@ -19,14 +19,16 @@
   :plugins [[lein-cljsbuild "1.0.4"]]
   :hooks [leiningen.cljsbuild]
   :main clojurelive-web.web
-  :source-paths ["src/clj" "src/cljs"]
+  :source-paths ["src/clj"]
   :uberjar-name "clojurelive-web-standalone.jar"
   :profiles {:uberjar {:aot :all}}
   :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/js"]
-  :cljsbuild {:builds {:dev {:compiler {:output-to     "resources/public/js/main.js"
+  :cljsbuild {:builds {:dev {:source-paths ["src/cljs"]
+                             :compiler {:output-to "resources/public/js/main.js"
                                         ;; :output-dir "resources/public/js/build-output-dev"
                                         ;; :source-map "resources/public/js/main.js.map"
                                         :optimizations :whitespace}}
-                       :minify {:compiler {:output-to "resources/public/js/main.js"
+                       :minify {:source-paths ["src/cljs"]
+                                :compiler {:output-to "resources/public/js/main.js"
                                            :optimizations :advanced}
                                 :jar true}}})
