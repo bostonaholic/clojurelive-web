@@ -20,6 +20,7 @@
   :main clojurelive-web.web
   :source-paths ["src/clj" "src/cljs"]
   :uberjar-name "clojurelive-web-standalone.jar"
+  :profiles {:uberjar {:aot :all}}
   :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/js"]
   :cljsbuild {:builds {:dev {:source-paths ["src/cljs"]
                              :compiler     {:output-to     "resources/public/js/main.js"
