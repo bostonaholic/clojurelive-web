@@ -2,8 +2,7 @@
   (:require [clojurelive-web.view :as view]
             [clojurelive-web.actions :as actions]
             [compojure.core :refer [defroutes GET POST]]
-            [compojure.route :as route]
-            [ring.middleware.defaults :as ring]))
+            [compojure.route :as route]))
 
 (defroutes routes
   (route/resources "/")
@@ -18,5 +17,4 @@
         (actions/unsubscribe email)))
 
 (def app
-  (-> routes
-      #_(ring/wrap-defaults ring/secure-site-defaults)))
+  (-> routes))
