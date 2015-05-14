@@ -1,5 +1,5 @@
 (ns clojurelive-web.actions
-  (:require [clojurelive-web.mailers]))
+  (:require [clojurelive-web.mailers :as mailers]))
 
 (defn subscribe [email]
   (println "SUBSCRIBE:" email)
