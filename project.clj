@@ -13,6 +13,7 @@
 
                  ;; client
                  [org.clojure/clojurescript "0.0-3269"]
+                 [cljsjs/jquery "1.9.1-0"]
                  [org.omcljs/om "0.8.8"]]
   :min-lein-version "2.4.0"
   :plugins [[lein-cljsbuild "1.0.4"]]
@@ -28,6 +29,6 @@
                                         ;; :source-map "resources/public/js/main.js.map"
                                         :optimizations :whitespace}}
                        :minify {:source-paths ["src/cljs"]
-                                :compiler {:output-to "resources/public/js/main.js"
+                                :compiler {:output-to "resources/public/js/main.min.js"
                                            :optimizations :advanced}
                                 :jar true}}})
