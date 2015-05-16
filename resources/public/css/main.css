@@ -1,5 +1,5 @@
 #headline {
-  text-align: center;
+  margin-bottom: 100px;
 }
 
 #headline h1 {
@@ -13,8 +13,12 @@
   padding-top: 5px;
 }
 
+#thank-you small {
+  color: #95A5A6;
+  display: block;
+}
+
 #main-subscribe-form {
-  margin-top: 100px;
   margin-right: auto;
   margin-left: auto;
   width: 400px;
@@ -32,4 +36,17 @@ footer {
 
 .center { text-align: center; }
 
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.4s linear;
+  -moz-transition: opacity 0.4s linear;
+  -o-transition: opacity 0.4s linear;
+  transition: opacity 0.4s linear;
+}
+
+.fade.in {
+  opacity: 1;
+}
+
 .alizarin { color: #E74C3C; }
+.turquoise { color: #1ABC9C; }

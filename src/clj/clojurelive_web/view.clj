@@ -16,16 +16,21 @@
 (def body
   [:body
    [:div.container
-    [:div#headline
+    [:div#headline.center
      [:h1
       [:span "Clojure Live"]
       [:small "Up-to-date news on Clojure, ClojureScript, and Datomic"]]]
 
-    [:form#main-subscribe-form {:action "/subscribe" :method "post"}
+    [:form#main-subscribe-form
      [:div.form-group
       [:label.sr-only {:for "email"} "Your email"]
       [:input.form-control {:type "email" :placeholder "Your email" :name "email" :require "required"}]]
-     [:input.btn.btn-primary {:type "submit" :value "Subscribe"}]]]
+     [:input.btn.btn-primary {:type "submit" :value "Subscribe"}]]
+
+    [:div#thank-you.center.fade
+     [:h6
+      [:span "Thank you!"]
+      [:small "You should be receiving a confirmation email shortly."]]]]
 
    [:footer
     [:div.container
