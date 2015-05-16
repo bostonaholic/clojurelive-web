@@ -1,7 +1,8 @@
 (ns clojurelive-web.mailers
-  (:require [postmark.core :refer [postmark]]))
+  (:require [postmark.core :refer [postmark]]
+            [environ.core :refer [env]]))
 
-(def api-token (get (System/getenv) "POSTMARK_API_TOKEN"))
+(def api-token (env :postmark-api-token))
 
 (def send-message (postmark api-token "matthew@clojurelive.com"))
 
