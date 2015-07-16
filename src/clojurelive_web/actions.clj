@@ -40,18 +40,22 @@
   (topic/newest 0 25))
 
 (defn new-link [req]
-  (let [topic (first (topic/create (:clojurelive/username (:session req))
-                                   {:title (:title (:params req))
-                                    :content (:content (:params req))
-                                    :type "link"}))]
-    (ring-response/redirect (str "/t/" (:uuid topic)) :see-other)))
+  (if (empty? (:clojurelive/username (:session req)))
+    (ring-response/redirect "/login")
+    (let [topic (first (topic/create (:clojurelive/username (:session req))
+                                     {:title (:title (:params req))
+                                      :content (:content (:params req))
+                                      :type "link"}))]
+      (ring-response/redirect (str "/t/" (:uuid topic)) :see-other))))
 
 (defn new-text [req]
-  (let [topic (first (topic/create (:clojurelive/username (:session req))
-                                   {:title (:title (:params req))
-                                    :content (:content (:params req))
-                                    :type "text"}))]
-    (ring-response/redirect (str "/t/" (:uuid topic)) :see-other)))
+  (if (empty? (:clojurelive/username (:session req)))
+    (ring-response/redirect "/login")
+    (let [topic (first (topic/create (:clojurelive/username (:session req))
+                                     {:title (:title (:params req))
+                                      :content (:content (:params req))
+                                      :type "text"}))]
+      (ring-response/redirect (str "/t/" (:uuid topic)) :see-other))))
 
 (defn send-reset-password-email [req]
   (let [email (:email (:params req))
