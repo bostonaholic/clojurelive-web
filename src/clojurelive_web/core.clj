@@ -12,6 +12,4 @@
     (web/run-dmc handler args)))
 
 (defn -main [& {:as args}]
-  (run-web handler/app
-           (merge {"host" (env :demo-web-host), "port" (env :demo-web-port)}
-                  args)))
+  (run-web handler/app args))
