@@ -17,8 +17,7 @@
                  [hiccup "1.0.5"]
                  [postmark "1.1.0" :exclusions [org.clojure/clojure]]
                  [environ "1.0.0"]]
-  :main ^:skip-aot clojurelive-web.core
-  :target-path "target/%s"
+  :min-lein-version "2.0.0"
   :uberjar-name "clojurelive-web-standalone.jar"
-  :jvm-opts ["-server"]
-  :profiles {:production {:env {:production true}}})
+  :main clojurelive-web.core
+  :profiles {:uberjar {:aot [clojurelive-web.core]}})

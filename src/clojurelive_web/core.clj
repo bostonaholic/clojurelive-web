@@ -1,14 +1,17 @@
 (ns clojurelive-web.core
   (:require [immutant.web :as web]
             [clojurelive-web.config :as config]
-            [clojurelive-web.handler :as handler])
+            [clojurelive-web.handler :as handler]
+            [environ.core :refer [env]])
   (:gen-class))
 
-(defn run-web [handler]
+(defn run-web [handler args]
   (condp = (:nomad/environment (config/config))
-    "prod" (web/run handler)
-    "dev" (web/run-dmc handler)
-    (web/run-dmc handler)))
+    "prod" (web/run handler args)
+    "dev" (web/run-dmc handler args)
+    (web/run-dmc handler args)))
 
-(defn -main [& args]
-  (run-web handler/app))
+(defn -main [& {:as args}]
+  (run-web handler/app
+           (merge {"host" (env :demo-web-host), "port" (env :demo-web-port)}
+                  args)))

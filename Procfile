@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/clojurelive-web-standalone.jar clojure.main -m clojurelive-web.core
+web: java $JVM_OPTS -jar target/clojurelive-web-standalone.jar host 0.0.0.0 port $PORT
