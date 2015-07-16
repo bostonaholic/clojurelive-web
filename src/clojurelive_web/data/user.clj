@@ -30,7 +30,7 @@
         user (merge (cleanse params)
                     {:email (:email params)
                      :uuid (uuid/v1)
-                     :created_at (java.sql.Date. (.getTime (java.util.Date.)))
+                     :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
                      :passhash (digest/md5 (str salt (:password params)))
                      :salt salt
                      :role "user"})]

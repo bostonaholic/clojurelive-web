@@ -6,7 +6,7 @@
             [digest :as digest]))
 
 (defn create [email token]
-  (let [reset-password-data {:created_at (java.sql.Date. (.getTime (java.util.Date.)))
+  (let [reset-password-data {:created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
                              :email email
                              :token token}]
     (jdbc/insert! db/conn-spec "reset_password_tokens" reset-password-data)))

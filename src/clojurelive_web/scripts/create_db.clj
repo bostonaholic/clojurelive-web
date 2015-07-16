@@ -12,7 +12,7 @@
    (jdbc/create-table-ddl :users
                           [:id :serial "PRIMARY KEY"]
                           [:uuid :uuid "UNIQUE NOT NULL"]
-                          [:created_at :date "NOT NULL"]
+                          [:created_at :timestamp "NOT NULL"]
                           [:username "VARCHAR(32)" "UNIQUE NOT NULL"]
                           [:email :text "UNIQUE NOT NULL"]
                           [:passhash "VARCHAR(32)" "NOT NULL"]
@@ -27,7 +27,7 @@
    (jdbc/create-table-ddl :topics
                           [:id :serial "PRIMARY KEY"]
                           [:uuid :uuid "UNIQUE NOT NULL"]
-                          [:created_at :date "NOT NULL"]
+                          [:created_at :timestamp "NOT NULL"]
                           [:submitter_id :integer "REFERENCES users"]
                           [:title :text "NOT NULL"]
                           [:content :text]
@@ -39,7 +39,7 @@
    db/conn-spec
    (jdbc/create-table-ddl "reset_password_tokens"
                           [:id :serial "PRIMARY KEY"]
-                          [:created_at :date "NOT NULL"]
+                          [:created_at :timestamp "NOT NULL"]
                           [:email :text "NOT NULL"]
                           [:token :uuid "UNIQUE NOT NULL"])
    "CREATE INDEX reset_password_tokens_token_index ON reset_password_tokens (token)"))

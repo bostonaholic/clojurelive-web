@@ -18,7 +18,7 @@
   (let [user (user/find-by-username username)
         topic (merge topic
                      {:uuid (uuid/v1)
-                      :created_at (java.sql.Date. (.getTime (java.util.Date.)))
+                      :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
                       :submitter_id (:id user)})]
     (jdbc/insert! db/conn-spec :topics topic)))
 
