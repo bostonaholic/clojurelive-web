@@ -26,4 +26,5 @@
                [:div.form-group
                 [:a {:href "/reset-password"} "Forgot your password?"]]]
 
-              view/footer]])))
+              view/footer
+              view/google-analytics]])))

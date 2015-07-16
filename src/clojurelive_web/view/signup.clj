@@ -34,4 +34,5 @@
                [:div.form-group
                 [:button {:type "submit"} "Submit"]]]
 
-              view/footer]])))
+              view/footer
+              view/google-analytics]])))

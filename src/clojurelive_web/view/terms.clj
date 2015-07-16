@@ -10,4 +10,5 @@
              [:h1 "Terms of Service"]
              [:h3 "TODO"]
              [:a {:href "https://github.com/ClojureLive/clojurelive-web"} "Open a PR"]
-             view/footer]]))
+             view/footer
+             view/google-analytics]]))

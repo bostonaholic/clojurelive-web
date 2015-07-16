@@ -16,7 +16,8 @@
               [:div.form-group
                [:button {:type "submit"} "Submit"]]]
 
-             view/footer]]))
+             view/footer
+             view/google-analytics]]))
 
 (defn new [session uuid]
   (h/html5 [:html
@@ -32,4 +33,5 @@
               [:div.form-group
                [:button {:type "submit"} "Submit"]]]
 
-             view/footer]]))
+             view/footer
+             view/google-analytics]]))

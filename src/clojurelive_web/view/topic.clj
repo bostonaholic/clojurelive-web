@@ -20,7 +20,8 @@
              [:div.topic-body
               (view/render-body topic)]
 
-             view/footer]]))
+             view/footer
+             view/google-analytics]]))
 
 (defn new-link [session]
   (h/html5 [:html

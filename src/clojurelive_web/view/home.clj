@@ -25,4 +25,5 @@
                    [:strong
                     [:a {:href (str "/t/" (:uuid topic))} "comment"]]]]])]
 
-             view/footer]]))
+             view/footer
+             view/google-analytics]]))
