@@ -1,34 +1,24 @@
-(defproject clojurelive-web "0.1.0-SNAPSHOT"
-  :description "https://www.clojurelive.com"
-  :url "https://github.com/ClojureLive/clojurelive-web"
+(defproject clojurelive-web "0.1.0"
+  :description "The code that runs ClojureLive"
+  :url "https//www.clojurelive.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [;; server
-                 [org.clojure/clojure "1.7.0-beta3"]
+  :dependencies [[org.clojure/clojure "1.7.0"]
+                 [jarohen/nomad "0.7.1"]
+                 [org.immutant/web "2.0.2"]
+                 [ring/ring-core "1.4.0"]
+                 [ring/ring-devel "1.4.0"]
                  [compojure "1.3.4"]
-                 [ring/ring-jetty-adapter "1.3.2"]
+                 [com.cemerick/friend "0.2.1"]
+                 [org.clojure/java.jdbc "0.3.7"]
+                 [org.postgresql/postgresql "9.4-1201-jdbc41"]
+                 [danlentz/clj-uuid "0.1.6"]
+                 [digest "1.4.4"]
                  [hiccup "1.0.5"]
                  [postmark "1.1.0" :exclusions [org.clojure/clojure]]
-                 [environ "1.0.0"]
-
-                 ;; client
-                 [org.clojure/clojurescript "0.0-3269"]
-                 [cljsjs/jquery "1.9.1-0"]
-                 [org.omcljs/om "0.8.8"]]
-  :min-lein-version "2.4.0"
-  :plugins [[lein-cljsbuild "1.0.4"]]
-  :hooks [leiningen.cljsbuild]
-  :main clojurelive-web.web
-  :source-paths ["src/clj"]
+                 [environ "1.0.0"]]
+  :main ^:skip-aot clojurelive-web.core
+  :target-path "target/%s"
   :uberjar-name "clojurelive-web-standalone.jar"
-  :profiles {:uberjar {:aot :all}}
-  :clean-targets ^{:protect false} [:target-path :compile-path "resources/public/js"]
-  :cljsbuild {:builds {:dev {:source-paths ["src/cljs"]
-                             :compiler {:output-to "resources/public/js/main.js"
-                                        ;; :output-dir "resources/public/js/build-output-dev"
-                                        ;; :source-map "resources/public/js/main.js.map"
-                                        :optimizations :whitespace}}
-                       :minify {:source-paths ["src/cljs"]
-                                :compiler {:output-to "resources/public/js/main.min.js"
-                                           :optimizations :advanced}
-                                :jar true}}})
+  :jvm-opts ["-server"]
+  :profiles {:production {:env {:production true}}})

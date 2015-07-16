@@ -1,31 +1,46 @@
-#headline {
-  margin-bottom: 100px;
+body {
+  font: 16px Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  padding: 25px 50px;
 }
 
-#headline h1 {
-  font-size: 90px;
+a {
+  color: #27ae60;
 }
 
-#headline small {
-  color: #95A5A6;
-  display: block;
-  font-size: 22px;
-  padding-top: 5px;
+a:hover {
+  color: #fff;
+  background: #27ae60;
+  text-decoration: none;
 }
 
-#thank-you small {
-  color: #95A5A6;
-  display: block;
+nav a {
+  text-decoration: none;
 }
 
-#main-subscribe-form {
-  margin-right: auto;
-  margin-left: auto;
-  width: 400px;
+label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  text-align: right;
+  width: 100px;
+  margin-left: -15px;
 }
 
-#main-subscribe-form input[type="submit"] {
-  width: 100%;
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+hr {
+  border-style: none;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+hr::after {
+  content: '***';
+  text-align: center;
+  display: inline;
 }
 
 footer {
@@ -34,19 +49,100 @@ footer {
   width: 100%;
 }
 
+#logo {
+  margin-bottom: 50px;
+}
+
+#logo a {
+  text-decoration: none;
+}
+
+.site-actions {
+  margin-bottom: 50px;
+  float: right;
+}
+
+.site-actions br {
+  line-height: 25px;
+}
+
+.site-actions a {
+  color: #2C3E50;
+  text-decoration: none;
+}
+
+.site-actions a:hover {
+  background-color: #2C3E50;
+  color: #fff;
+  text-decoration: none;
+}
+
+#topics > .topic {
+  margin-bottom: 10px;
+}
+
+.topic-title a {
+  text-decoration: none;
+}
+
+.topic-actions a {
+  color: #7F8C8D;
+  text-decoration: none;
+}
+
+.topic-actions a:hover {
+  background-color: #7F8C8D;
+  color: #fff;
+  text-decoration: none;
+}
+
+.topic-body {
+  max-width: 700px;
+}
+
+.topic-body p {
+  margin-bottom: 20px;
+  line-height: 24px;
+}
+
+input.link-title, input.link-content, input.text-title {
+  width: 500px;
+}
+
+textarea.text-content {
+  height: 100px;
+  max-width: 100%;
+  width: 500px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
 .center { text-align: center; }
+.pull-left { float: left; }
+.pull-right { float: right; }
 
-.fade {
-  opacity: 0;
-  -webkit-transition: opacity 0.4s linear;
-  -moz-transition: opacity 0.4s linear;
-  -o-transition: opacity 0.4s linear;
-  transition: opacity 0.4s linear;
-}
+.has-error { color: #E74C3C; }
 
-.fade.in {
-  opacity: 1;
-}
-
-.alizarin { color: #E74C3C; }
+/* http://designmodo.github.io/Flat-UI/ */
 .turquoise { color: #1ABC9C; }
+.green-sea { color: #16A085; }
+.emerald { color: #2ECC71; }
+.nephritis { color: #27AE60; }
+.peter-river { color: #3498DB; }
+.belize-hole { color: #2980B9; }
+.amethyst { color: #9B59B6; }
+.wisteria { color: #8E44AD; }
+.wet-asphalt { color: #34495E; }
+.midnight-blue { color: #2C3E50; }
+.sun-flower { color: #F1C40F; }
+.orange { color: #F39C12; }
+.carrot { color: #E67E22; }
+.pumpkin { color: #D35400; }
+.alizarin { color: #E74C3C; }
+.pomegranate { color: #C0392B; }
+.clouds { color: #ECF0F1; }
+.silver { color: #BDC3C7; }
+.concrete { color: #95A5A6; }
+.asbestos { color: #7F8C8D; }

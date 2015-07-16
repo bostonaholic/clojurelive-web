@@ -1,14 +1,26 @@
 # clojurelive-web
 
-A Clojure library designed to ... well, that part is up to you.
+https://clojurelive.com
+
+## Installation
 
 ## Usage
 
-FIXME
+    $ source .env # set up environment variables
+    $ lein run
+
+## TODO
+
+- TOS and Code of Conduct
+- 404/500
+- code highlighting
+- integrated repl (clj, cljs)
+- mark a post 'pending' for explicit language
+- Function of the Month
 
 ## License
 
-Copyright © 2015 FIXME
+Copyright © 2015 ClojureLive
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

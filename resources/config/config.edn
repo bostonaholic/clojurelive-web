@@ -1,0 +1,11 @@
+{:nomad/environments
+ {"dev" {:db {:subname "//localhost:5432/clojurelive_web_dev"
+              :user "clojurelive"
+              :password "clojurelive_dev"
+              :sslmode "disable"}
+         :send-emails? false}
+  "prod" {:db {:subname #nomad/env-var "DB_SUBNAME"
+               :user #nomad/env-var "DB_USER"
+               :password #nomad/env-var "DB_PASSWORD"
+               :sslmode "require"}
+          :send-emails? true}}}
