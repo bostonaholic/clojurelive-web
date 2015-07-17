@@ -1,5 +1,6 @@
 (ns clojurelive-web.view.common
-  (:require [hiccup.page :as h]
+  (:require [clojure.string :as string]
+            [hiccup.page :as h]
             [hiccup.util :as hiccup-util]))
 
 (def head
@@ -66,6 +67,9 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-62980400-1', 'auto');
 ga('send', 'pageview');"])
 
+(defn prettify [content]
+  (string/replace content #"(\r\n)+" "</p><p>"))
+
 (defmulti render-title :type)
 (defmethod render-title :default [_] nil)
 (defmethod render-title "link" [this]
@@ -78,5 +82,5 @@ ga('send', 'pageview');"])
   [:hr])
 (defmethod render-body "text" [this]
   (list
-   [:p (hiccup-util/escape-html (:content this))]
+   [:p (prettify (hiccup-util/escape-html (:content this)))]
    [:hr]))
