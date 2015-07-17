@@ -14,9 +14,6 @@
             [ring.middleware.session.cookie :as cookie]
             [ring.util.response :as ring-response]))
 
-(defn authenticated? [req]
-  (not-empty (:clojurelive/username (:session req))))
-
 (defroutes routes
   (compojure-route/resources "/")
 
@@ -34,12 +31,12 @@
   (POST "/reset-password/:uuid" req (actions/reset-password req))
 
   (GET "/link/new" req
-       (if (authenticated? req)
+       (if (actions/authenticated? req)
          (topic-view/new-link (:session req))
          (ring-response/redirect "/login")))
   (POST "/link/new" req (actions/new-link req))
   (GET "/text/new" req
-       (if (authenticated? req)
+       (if (actions/authenticated? req)
          (topic-view/new-text (:session req))
          (ring-response/redirect "/login")))
   (POST "/text/new" req (actions/new-text req))

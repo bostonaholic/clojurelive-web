@@ -9,6 +9,9 @@
             [digest :as digest]
             [ring.util.response :as ring-response]))
 
+(defn authenticated? [req]
+  (not-empty (:clojurelive/username (:session req))))
+
 (defn signup [req]
   (let [params (:params req)
         session (:session req)
@@ -40,7 +43,7 @@
   (topic/newest 0 25))
 
 (defn new-link [req]
-  (if (empty? (:clojurelive/username (:session req)))
+  (if (not (authenticated? req))
     (ring-response/redirect "/login")
     (let [topic (first (topic/create (:clojurelive/username (:session req))
                                      {:title (:title (:params req))
@@ -49,7 +52,7 @@
       (ring-response/redirect (str "/t/" (:uuid topic)) :see-other))))
 
 (defn new-text [req]
-  (if (empty? (:clojurelive/username (:session req)))
+  (if (not (authenticated? req))
     (ring-response/redirect "/login")
     (let [topic (first (topic/create (:clojurelive/username (:session req))
                                      {:title (:title (:params req))
