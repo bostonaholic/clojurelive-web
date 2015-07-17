@@ -5,16 +5,12 @@ body {
 
 a {
   color: #27ae60;
+  text-decoration: none;
 }
 
 a:hover {
   color: #fff;
   background: #27ae60;
-  text-decoration: none;
-}
-
-nav a {
-  text-decoration: none;
 }
 
 label {
@@ -52,10 +48,6 @@ footer {
   margin-bottom: 50px;
 }
 
-#logo a {
-  text-decoration: none;
-}
-
 .site-actions {
   margin-bottom: 50px;
   float: right;
@@ -67,32 +59,24 @@ footer {
 
 .site-actions a {
   color: #2C3E50;
-  text-decoration: none;
 }
 
 .site-actions a:hover {
   background-color: #2C3E50;
   color: #fff;
-  text-decoration: none;
 }
 
 #topics > .topic {
   margin-bottom: 10px;
 }
 
-.topic-title a {
-  text-decoration: none;
-}
-
 .topic-actions a {
   color: #7F8C8D;
-  text-decoration: none;
 }
 
 .topic-actions a:hover {
   background-color: #7F8C8D;
   color: #fff;
-  text-decoration: none;
 }
 
 .topic-body {
