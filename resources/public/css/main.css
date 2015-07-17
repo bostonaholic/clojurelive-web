@@ -44,8 +44,7 @@ hr::after {
 }
 
 footer {
-  bottom: 0;
-  position: absolute;
+  margin-top: 100px;
   width: 100%;
 }
 
