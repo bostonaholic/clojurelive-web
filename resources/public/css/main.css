@@ -79,20 +79,34 @@ footer {
   color: #fff;
 }
 
-.topic-body {
+.topic-submitter {
+  color: #95A5A6;
+}
+
+.topic-content {
+  margin-top: -10px;
   max-width: 700px;
 }
 
-.topic-body p {
+.topic-content p {
   margin-bottom: 20px;
   line-height: 24px;
+}
+
+.comment-submitter {
+  color: #95A5A6;
+}
+
+.comment-content {
+  margin-top: -10px;
 }
 
 input.link-title, input.link-content, input.text-title {
   width: 500px;
 }
 
-textarea.text-content {
+textarea.text-content,
+textarea.comment-content {
   height: 100px;
   max-width: 100%;
   width: 500px;

@@ -77,10 +77,10 @@ ga('send', 'pageview');"])
 (defmethod render-title "text" [this]
   [:a {:href (str "/t/" (:uuid this))} (hiccup-util/escape-html (:title this))])
 
-(defmulti render-body :type)
-(defmethod render-body :default [_]
+(defmulti render-content :type)
+(defmethod render-content :default [_]
   [:hr])
-(defmethod render-body "text" [this]
+(defmethod render-content "text" [this]
   (list
    [:p (prettify (hiccup-util/escape-html (:content this)))]
    [:hr]))

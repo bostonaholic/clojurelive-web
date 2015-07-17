@@ -1,5 +1,6 @@
 (ns clojurelive-web.actions
-  (:require [clojurelive-web.data.reset-password :as reset-password]
+  (:require [clojurelive-web.data.comment :as comment]
+            [clojurelive-web.data.reset-password :as reset-password]
             [clojurelive-web.data.topic :as topic]
             [clojurelive-web.data.user :as user]
             [clojurelive-web.mailer :as mailer]
@@ -70,3 +71,11 @@
 (defn reset-password [req]
   (reset-password/update (:uuid (:params req)) (:password (:params req)))
   (ring-response/redirect "/login"))
+
+(defn new-comment [req]
+  (if (not (authenticated? req))
+    (ring-response/redirect "/login")
+    (let [comment (comment/create (:clojurelive/username (:session req))
+                                  (:uuid (:params req))
+                                  {:content (:content (:params req))})]
+      (ring-response/redirect (str "/t/" (:uuid (:params req)))))))

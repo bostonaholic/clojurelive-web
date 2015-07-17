@@ -14,13 +14,17 @@
                                  ["SELECT * FROM topics WHERE uuid = ?" (uuid/as-uuid uuid)]))]
     (assoc-submitter-username-for-topic topic)))
 
+(defn find-by-uuid [uuid]
+  (first (jdbc/query db/conn-spec
+                     ["SELECT * FROM topics WHERE uuid = ?" (uuid/as-uuid uuid)])))
+
 (defn create [username topic]
   (let [user (user/find-by-username username)
         topic (merge topic
                      {:uuid (uuid/v1)
                       :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
                       :submitter_id (:id user)})]
-    (jdbc/insert! db/conn-spec :topics topic)))
+    (first (jdbc/insert! db/conn-spec :topics topic))))
 
 (defn newest [offset limit]
   (let [topics (jdbc/query db/conn-spec

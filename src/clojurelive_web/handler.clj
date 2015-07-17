@@ -44,6 +44,7 @@
   (GET "/t/:uuid" req
        (->> (actions/for-topic req)
             (topic-view/show (:session req))))
+  (POST "/t/:uuid/comment" req (actions/new-comment req))
 
   (GET "/newest" req (topic-view/listing (:session req) (actions/newest-topics)))
 

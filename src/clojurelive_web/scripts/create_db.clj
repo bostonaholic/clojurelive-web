@@ -43,3 +43,14 @@
                           [:email :text "NOT NULL"]
                           [:token :uuid "UNIQUE NOT NULL"])
    "CREATE INDEX reset_password_tokens_token_index ON reset_password_tokens (token)"))
+
+(defn create-table-comments []
+  (jdbc/db-do-commands
+   db/conn-spec
+   (jdbc/create-table-ddl :comments
+                          [:id :serial "PRIMARY KEY"]
+                          [:uuid :uuid "UNIQUE NOT NULL"]
+                          [:created_at :timestamp "NOT NULL"]
+                          [:topic_id :integer "REFERENCES topics"]
+                          [:submitter_id :integer "REFERENCES users"]
+                          [:content :text "NOT NULL"])))
