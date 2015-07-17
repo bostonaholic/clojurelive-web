@@ -2,7 +2,7 @@
   (:require [clojurelive-web.view.common :as view]
             [hiccup.page :as h]))
 
-(defn list [session topics]
+(defn listing [session topics]
   (h/html5 [:html
             view/head
             [:body

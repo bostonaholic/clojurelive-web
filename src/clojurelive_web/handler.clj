@@ -48,7 +48,7 @@
        (->> (actions/for-topic req)
             (topic-view/show (:session req))))
 
-  (GET "/newest" req (topic-view/list (:session req) (actions/newest-topics)))
+  (GET "/newest" req (topic-view/listing (:session req) (actions/newest-topics)))
 
   (GET "/terms" req (terms-view/show (:session req)))
   (GET "/conduct" req (conduct-view/show (:session req)))
