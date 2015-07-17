@@ -11,6 +11,7 @@ https://clojurelive.com
 
 ## TODO
 
+- Better SQL or ORM
 - TOS and Code of Conduct
 - 404/500
 - code highlighting

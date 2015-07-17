@@ -9,10 +9,20 @@
             [:submitter :username]
             (:username (user/find-by-id (:submitter_id topic)))))
 
+(defn assoc-comments-for-topic [topic]
+  (assoc topic
+         :comments
+         (map (fn [comment] (assoc-in comment
+                                     [:submitter :username]
+                                     (:username (user/find-by-id (:submitter_id comment)))))
+              (jdbc/query db/conn-spec ["SELECT * FROM comments WHERE topic_id = ? ORDER BY created_at DESC" (:id topic)]))))
+
 (defn for-uuid [uuid]
   (let [topic (first (jdbc/query db/conn-spec
                                  ["SELECT * FROM topics WHERE uuid = ?" (uuid/as-uuid uuid)]))]
-    (assoc-submitter-username-for-topic topic)))
+    (-> topic
+        assoc-submitter-username-for-topic
+        assoc-comments-for-topic)))
 
 (defn find-by-uuid [uuid]
   (first (jdbc/query db/conn-spec
