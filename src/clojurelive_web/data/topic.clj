@@ -4,11 +4,6 @@
             [clojurelive-web.db :as db]
             [clj-uuid :as uuid]))
 
-(defn assoc-submitter-username-for-topic [topic]
-  (assoc-in topic
-            [:submitter :username]
-            (:username (user/find-by-id (:submitter_id topic)))))
-
 (defn assoc-comments-for-topic [topic]
   (assoc topic
          :comments
@@ -19,10 +14,8 @@
 
 (defn for-uuid [uuid]
   (let [topic (first (jdbc/query db/conn-spec
-                                 ["SELECT * FROM topics WHERE uuid = ?" (uuid/as-uuid uuid)]))]
-    (-> topic
-        assoc-submitter-username-for-topic
-        assoc-comments-for-topic)))
+                                 ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.submitter_id = users.id WHERE topics.uuid = ?" (uuid/as-uuid uuid)]))]
+    (assoc-comments-for-topic topic)))
 
 (defn find-by-uuid [uuid]
   (first (jdbc/query db/conn-spec
@@ -37,6 +30,5 @@
     (first (jdbc/insert! db/conn-spec :topics topic))))
 
 (defn newest [offset limit]
-  (let [topics (jdbc/query db/conn-spec
-                           ["SELECT * FROM topics ORDER BY created_at DESC OFFSET ? LIMIT ?" offset limit])]
-    (map assoc-submitter-username-for-topic topics)))
+  (jdbc/query db/conn-spec
+              ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.submitter_id = users.id ORDER BY created_at DESC OFFSET ? LIMIT ?" offset limit]))

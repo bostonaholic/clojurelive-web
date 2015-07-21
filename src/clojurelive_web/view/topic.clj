@@ -20,7 +20,7 @@
                  [:div.topic-title
                   (view/render-title topic)]
                  [:div.topic-submitter
-                  [:small (str "submitted by " (:username (:submitter topic)))]]
+                  [:small (str "submitted by " (:submitter topic))]]
                  [:div.topic-actions
                   [:small
                    [:strong
@@ -46,7 +46,7 @@
                 (view/render-title topic)]]
 
               [:div.topic-submitter
-               [:small (str "submitted by " (:username (:submitter topic)))]]
+               [:small (str "submitted by " (:submitter topic))]]
 
               [:div.topic-content
                (view/render-content topic)]]
