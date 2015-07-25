@@ -9,12 +9,12 @@
          :comments
          (map (fn [comment] (assoc-in comment
                                      [:submitter :username]
-                                     (:username (user/find-by-id (:submitter_id comment)))))
-              (jdbc/query db/conn-spec ["SELECT * FROM comments WHERE topic_id = ? ORDER BY created_at DESC" (:id topic)]))))
+                                     (:username (user/find-by-id (:users_id comment)))))
+              (jdbc/query db/conn-spec ["SELECT * FROM comments WHERE topics_id = ? ORDER BY created_at DESC" (:id topic)]))))
 
 (defn for-uuid [uuid]
   (let [topic (first (jdbc/query db/conn-spec
-                                 ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.submitter_id = users.id WHERE topics.uuid = ?" (uuid/as-uuid uuid)]))]
+                                 ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.users_id = users.id WHERE topics.uuid = ?" (uuid/as-uuid uuid)]))]
     (assoc-comments-for-topic topic)))
 
 (defn find-by-uuid [uuid]
@@ -26,9 +26,9 @@
         topic (merge topic
                      {:uuid (uuid/v1)
                       :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
-                      :submitter_id (:id user)})]
+                      :users_id (:id user)})]
     (first (jdbc/insert! db/conn-spec :topics topic))))
 
 (defn newest [offset limit]
   (jdbc/query db/conn-spec
-              ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.submitter_id = users.id ORDER BY created_at DESC OFFSET ? LIMIT ?" offset limit]))
+              ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.users_id = users.id ORDER BY created_at DESC OFFSET ? LIMIT ?" offset limit]))

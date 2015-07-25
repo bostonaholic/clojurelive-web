@@ -11,6 +11,6 @@
         comment (merge comment
                        {:uuid (uuid/v1)
                         :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
-                        :topic_id (:id topic)
-                        :submitter_id (:id user)})]
+                        :topics_id (:id topic)
+                        :users_id (:id user)})]
     (first (jdbc/insert! db/conn-spec :comments comment))))

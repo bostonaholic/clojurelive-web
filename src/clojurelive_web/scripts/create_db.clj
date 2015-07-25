@@ -31,11 +31,11 @@
                           [:id :serial "PRIMARY KEY"]
                           [:uuid :uuid "UNIQUE NOT NULL"]
                           [:created_at :timestamp "NOT NULL"]
-                          [:submitter_id :integer "REFERENCES users"]
+                          [:users_id :integer "REFERENCES users"]
                           [:title :text "NOT NULL"]
                           [:content :text]
                           [:type :text "NOT NULL"])
-   "CREATE INDEX topics_uuid_index ON topics (uuid)"))
+   "CREATE UNIQUE INDEX topics_uuid_index ON topics (uuid);"))
 
 (defn create-table-reset-password-tokens []
   (jdbc/db-do-commands
@@ -54,6 +54,13 @@
                           [:id :serial "PRIMARY KEY"]
                           [:uuid :uuid "UNIQUE NOT NULL"]
                           [:created_at :timestamp "NOT NULL"]
-                          [:topic_id :integer "REFERENCES topics"]
-                          [:submitter_id :integer "REFERENCES users"]
+                          [:topics_id :integer "REFERENCES topics"]
+                          [:users_id :integer "REFERENCES users"]
                           [:content :text "NOT NULL"])))
+
+(comment
+  (install-ci-text-module)
+  (create-table-users)
+  (create-table-topics)
+  (create-table-reset-password-tokens)
+  (create-table-comments))
