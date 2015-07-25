@@ -13,4 +13,4 @@
                         :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
                         :topics_id (:id topic)
                         :users_id (:id user)})]
-    (first (jdbc/insert! db/conn-spec :comments comment))))
+    (jdbc/insert! db/conn-spec :comments comment)))

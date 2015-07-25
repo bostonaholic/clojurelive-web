@@ -27,7 +27,7 @@
                      {:uuid (uuid/v1)
                       :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
                       :users_id (:id user)})]
-    (first (jdbc/insert! db/conn-spec :topics topic))))
+    (jdbc/insert! db/conn-spec :topics topic)))
 
 (defn newest [offset limit]
   (jdbc/query db/conn-spec
