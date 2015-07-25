@@ -6,6 +6,10 @@
 ;; $ createuser clojurelive -P # clojurelive_dev
 ;; $ createdb clojurelive_web_dev -O clojurelive
 ;;
+(defn install-ci-text-module []
+  (jdbc/db-do-commands
+   (jdbc/execute! db/conn-spec ["CREATE EXTENSION IF NOT EXISTS citext;"])))
+
 (defn create-table-users []
   (jdbc/db-do-commands
    db/conn-spec
@@ -14,12 +18,11 @@
                           [:uuid :uuid "UNIQUE NOT NULL"]
                           [:created_at :timestamp "NOT NULL"]
                           [:username "VARCHAR(32)" "UNIQUE NOT NULL"]
-                          [:email :text "UNIQUE NOT NULL"]
+                          [:email :citext "UNIQUE NOT NULL"]
                           [:passhash "VARCHAR(32)" "NOT NULL"]
                           [:salt "VARCHAR(32)" "NOT NULL"]
                           [:role :text])
-   "CREATE INDEX users_username_index ON users (username)"
-   "CREATE INDEX users_email_index ON users (email)"))
+   "CREATE UNIQUE INDEX users_lower_username_index ON users (lower(username));"))
 
 (defn create-table-topics []
   (jdbc/db-do-commands
@@ -40,9 +43,9 @@
    (jdbc/create-table-ddl "reset_password_tokens"
                           [:id :serial "PRIMARY KEY"]
                           [:created_at :timestamp "NOT NULL"]
-                          [:email :text "NOT NULL"]
+                          [:email :citext "NOT NULL"]
                           [:token :uuid "UNIQUE NOT NULL"])
-   "CREATE INDEX reset_password_tokens_token_index ON reset_password_tokens (token)"))
+   "CREATE UNIQUE INDEX reset_password_tokens_token_index ON reset_password_tokens (token);"))
 
 (defn create-table-comments []
   (jdbc/db-do-commands

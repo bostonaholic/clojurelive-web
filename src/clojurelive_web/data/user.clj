@@ -37,16 +37,12 @@
     (try
       (when-not (username-valid? (:username params))
         (throw (Exception. "username_invalid")))
-      (when (not-empty (find-by-username (:username params)))
-        (throw (Exception. "users_username_key")))
-      (when (not-empty (find-by-email (:email params)))
-        (throw (Exception. "users_email_key")))
       (jdbc/insert! db/conn-spec :users user)
       (catch Exception e
         (let [msg (.getMessage e)]
           {:errors {:username (or (when (re-find #"username_invalid" msg)
                                     {:message "username must only include a-z, A-Z, 0-9, _"})
-                                  (when (re-find #"users_username_key" msg)
+                                  (when (re-find #"users_username_key|users_lower_username_index" msg)
                                     {:message "username already exists"}))
                     :email (when (re-find #"users_email_key" msg)
                              {:message "email already exists"})}})))))
