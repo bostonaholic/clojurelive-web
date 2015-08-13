@@ -1,0 +1,5 @@
+{:nomad/environments
+ {"dev" {:datomic-url "datomic:dev://localhost:4334/clojurelive"
+         :send-emails? false}
+  "prod" {:datomic-url ""
+          :send-emails? true}}}
