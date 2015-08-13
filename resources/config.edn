@@ -1,5 +1,5 @@
 {:nomad/environments
- {"dev" {:db {:subname "//localhost:5432/clojurelive_web_dev"
+ {"dev" {:db {:subname "//localhost:5432/clojurelive_dev"
               :user "clojurelive"
               :password "clojurelive_dev"
               :sslmode "disable"}
