@@ -3,8 +3,9 @@
             [clojurelive-web.db :as db]))
 
 ;;
-;; $ createuser clojurelive -P # clojurelive_dev
-;; $ createdb clojurelive_web_dev -O clojurelive
+;; $ createuser clojurelive -P
+;; > clojurelive_dev
+;; $ createdb clojurelive_dev -O clojurelive
 ;;
 (defn install-ci-text-module []
   (jdbc/db-do-commands
@@ -58,7 +59,7 @@
                           [:users_id :integer "REFERENCES users"]
                           [:content :text "NOT NULL"])))
 
-(comment
+(defn -main [& args]
   (install-ci-text-module)
   (create-table-users)
   (create-table-topics)
