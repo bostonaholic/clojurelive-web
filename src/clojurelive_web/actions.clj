@@ -6,8 +6,6 @@
             [clojurelive-web.mailer :as mailer]
             [clojurelive-web.view.login :as login-view]
             [clojurelive-web.view.signup :as signup-view]
-            [clj-uuid :as uuid]
-            [digest :as digest]
             [ring.util.response :as ring-response]))
 
 (defn authenticated? [req]
@@ -46,26 +44,24 @@
 (defn new-link [req]
   (if (not (authenticated? req))
     (ring-response/redirect "/login")
-    (let [topic (first (topic/create (:clojurelive/username (:session req))
-                                     {:title (:title (:params req))
-                                      :content (:content (:params req))
-                                      :type "link"}))]
-      (ring-response/redirect (str "/t/" (:uuid topic)) :see-other))))
+    (let [link-uuid (topic/create-link (:clojurelive/username (:session req))
+                                       {:title (:title (:params req))
+                                        :url (:url (:params req))})]
+      (ring-response/redirect (str "/t/" link-uuid) :see-other))))
 
 (defn new-text [req]
   (if (not (authenticated? req))
     (ring-response/redirect "/login")
-    (let [topic (first (topic/create (:clojurelive/username (:session req))
-                                     {:title (:title (:params req))
-                                      :content (:content (:params req))
-                                      :type "text"}))]
-      (ring-response/redirect (str "/t/" (:uuid topic)) :see-other))))
+    (let [text-uuid (topic/create-text (:clojurelive/username (:session req))
+                                       {:title (:title (:params req))
+                                        :content (:content (:params req))})]
+      (ring-response/redirect (str "/t/" text-uuid) :see-other))))
 
 (defn send-reset-password-email [req]
   (let [email (:email (:params req))
-        token (uuid/v1)]
-    (reset-password/create email token)
-    (mailer/reset-password email token)
+        token (reset-password/create email)]
+    (when token
+      (mailer/reset-password email token))
     (ring-response/redirect "/")))
 
 (defn reset-password [req]
@@ -76,6 +72,6 @@
   (if (not (authenticated? req))
     (ring-response/redirect "/login")
     (let [comment (comment/create (:clojurelive/username (:session req))
-                                  (:uuid (:params req))
-                                  {:content (:content (:params req))})]
+                                  {:parent-uuid (:uuid (:params req))
+                                   :body (:body (:params req))})]
       (ring-response/redirect (str "/t/" (:uuid (:params req)))))))

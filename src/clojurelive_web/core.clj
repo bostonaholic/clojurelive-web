@@ -1,8 +1,8 @@
 (ns clojurelive-web.core
   (:require [immutant.web :as web]
             [clojurelive-web.config :as config]
-            [clojurelive-web.handler :as handler]
-            [environ.core :refer [env]])
+            [clojurelive-web.db :as db]
+            [clojurelive-web.handler :as handler])
   (:gen-class))
 
 (defn run-web [handler args]
@@ -12,4 +12,5 @@
     (web/run-dmc handler args)))
 
 (defn -main [& {:as args}]
+  (db/ensure!)
   (run-web handler/app args))

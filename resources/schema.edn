@@ -1,0 +1,129 @@
+{:clojurelive/user
+ {:txes [[{:db/id #db/id[:db.part/db]
+           :db/ident :users
+           :db.install/_partition :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :user/uuid
+           :db/unique :db.unique/identity
+           :db/valueType :db.type/uuid
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :user/username
+           :db/unique :db.unique/value
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :user/email
+           :db/unique :db.unique/value
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :user/passhash
+           :db/index true
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :user/salt
+           :db/index true
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}]]}
+
+ :clojurelive/topic
+ {:txes [[{:db/id #db/id[:db.part/db]
+           :db/ident :topics
+           :db.install/_partition :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :topic/uuid
+           :db/unique :db.unique/identity
+           :db/valueType :db.type/uuid
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :topic/submitter
+           :db/valueType :db.type/ref
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :topic/title
+           :db/index true
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :topic/content
+           :db/index true
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :topic/url
+           :db/index true
+           :db/valueType :db.type/uri
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id [:db.part/db]
+           :db/ident :topic/comments
+           :db/valueType :db.type/ref
+           :db/cardinality :db.cardinality/many
+           :db/isComponent true
+           :db.install/_attribute :db.part/db}]]}
+
+ :clojurelive/comment
+ {:txes [[{:db/id #db/id[:db.part/db]
+           :db/ident :comments
+           :db.install/_partition :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :comment/uuid
+           :db/unique :db.unique/identity
+           :db/valueType :db.type/uuid
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :comment/submitter
+           :db/valueType :db.type/ref
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :comment/body
+           :db/index true
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}]]}
+
+ :clojurelive/resetPasswordToken
+ {:txes [[{:db/id #db/id[:db.part/db]
+           :db/ident :resetPasswordTokens
+           :db.install/_partition :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :resetPasswordToken/email
+           :db/index true
+           :db/valueType :db.type/string
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}
+
+          {:db/id #db/id[:db.part/db]
+           :db/ident :resetPasswordToken/uuid
+           :db/unique :db.unique/identity
+           :db/valueType :db.type/uuid
+           :db/cardinality :db.cardinality/one
+           :db.install/_attribute :db.part/db}]]}}

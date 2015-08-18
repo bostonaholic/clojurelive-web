@@ -1,16 +1,13 @@
 (ns clojurelive-web.data.comment
-  (:require [clojure.java.jdbc :as jdbc]
-            [clojurelive-web.data.user :as user]
-            [clojurelive-web.data.topic :as topic]
-            [clojurelive-web.db :as db]
+  (:require [clojurelive-web.db :as db]
+            [datomic.api :as d]
             [clj-uuid :as uuid]))
 
-(defn create [username topic-uuid comment]
-  (let [user (user/find-by-username username)
-        topic (topic/find-by-uuid topic-uuid)
-        comment (merge comment
-                       {:uuid (uuid/v1)
-                        :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
-                        :topics_id (:id topic)
-                        :users_id (:id user)})]
-    (jdbc/insert! db/conn-spec :comments comment)))
+(defn create [username comment]
+  (let [comment {:db/id (d/tempid :comments)
+                 :comment/body (:body comment)
+                 :comment/uuid (d/squuid)
+                 :comment/submitter [:user/username username]
+                 :topic/_comments [:topic/uuid (uuid/as-uuid (:parent-uuid comment))]}
+        tx (d/transact @db/conn [comment])]
+    @tx))

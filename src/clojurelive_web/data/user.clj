@@ -1,53 +1,48 @@
 (ns clojurelive-web.data.user
-  (:require [clojure.java.jdbc :as jdbc]
-            [clojurelive-web.db :as db]
+  (:require [clojurelive-web.db :as db]
             [clojurelive-web.data.common :as common]
-            [clj-uuid :as uuid]
+            [datomic.api :as d]
             [digest :as digest]))
-
-(defn cleanse [params]
-  (-> params
-      (dissoc :password)
-      (dissoc :tos)))
 
 (defn username-valid? [username]
   (empty? (re-find #"[^a-zA-Z0-9_]" username)))
 
-(defn find-by-id [id]
-  (first (jdbc/query db/conn-spec
-                     ["select * from users where id = ?" id])))
-
 (defn find-by-username [username]
-  (first (jdbc/query db/conn-spec
-                     ["select * from users where lower(username) = ?" (.toLowerCase username)])))
+  (d/q '[:find (pull ?user [*]) .
+         :in $ ?username
+         :where
+         [?user :user/username ?username]]
+       (db/db)
+       username))
 
 (defn find-by-email [email]
-  (first (jdbc/query db/conn-spec
-                     ["select * from users where lower(email) = ?" (.toLowerCase email)])))
+  (d/q '[:find (pull ?user [*]) .
+         :in $ ?email
+         :where
+         [?user :user/email ?email]]
+       (db/db)
+       email))
 
 (defn create [params]
   (let [salt (common/generate-salt)
-        user (merge (cleanse params)
-                    {:email (:email params)
-                     :uuid (uuid/v1)
-                     :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
-                     :passhash (digest/md5 (str salt (:password params)))
-                     :salt salt
-                     :role "user"})]
-    (try
-      (when-not (username-valid? (:username params))
-        (throw (Exception. "username_invalid")))
-      (jdbc/insert! db/conn-spec :users user)
-      (catch Exception e
-        (let [msg (.getMessage e)]
-          {:errors {:username (or (when (re-find #"username_invalid" msg)
-                                    {:message "username must only include a-z, A-Z, 0-9, _"})
-                                  (when (re-find #"users_username_key|users_lower_username_index" msg)
-                                    {:message "username already exists"}))
-                    :email (when (re-find #"users_email_key" msg)
-                             {:message "email already exists"})}})))))
+        user {:db/id (d/tempid :users)
+              :user/email (:email params)
+              :user/username (:username params)
+              :user/uuid (d/squuid)
+              :user/passhash (digest/md5 (str salt (:password params)))
+              :user/salt salt}]
+    (if-not (username-valid? (:user/username user))
+      {:errors {:username {:message "username must only include a-z, A-Z, 0-9, _"}}}
+      (try
+        @(d/transact @db/conn [user])
+        (catch Exception e
+          (let [msg (.getMessage e)]
+            {:errors {:username (when (re-find #":db.error/unique-conflict Unique conflict: :user/username" msg)
+                                  {:message "username already exists"})
+                      :email (when (re-find #":db.error/unique-conflict Unique conflict: :user/email" msg)
+                               {:message "email already exists"})}}))))))
 
 (defn authenticate [username password]
   (let [user (find-by-username username)]
-    (= (:passhash user)
-       (digest/md5 (str (:salt user) password)))))
+    (= (:user/passhash user)
+       (digest/md5 (str (:user/salt user) password)))))
