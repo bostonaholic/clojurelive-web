@@ -1,14 +1,17 @@
 (ns clojurelive-web.db
-  (:require [clojurelive-web.config :as config]))
+  (:require [clojurelive-web.config :as config]
+            [clojure.java.io :as io]
+            [datomic.api :as d]
+            [io.rkn.conformity :as c]))
 
-(defonce subname (:subname (:db (config/config))))
-(defonce db-user (:user (:db (config/config))))
-(defonce db-password (:password (:db (config/config))))
-(defonce sslmode (:sslmode (:db (config/config))))
+(def url (:datomic-url (config/config)))
 
-(defonce conn-spec {:classname "org.postgresql.Driver"
-                    :subprotocol "postgresql"
-                    :subname subname
-                    :user db-user
-                    :password db-password
-                    :sslmode sslmode})
+(def conn (delay (d/connect url)))
+
+(defn db [] (d/db @conn))
+
+(def schema (read-string (slurp (io/resource "schema.edn"))))
+
+(defn ensure!
+  ([] (ensure! @conn))
+  ([conn] (c/ensure-conforms conn schema)))

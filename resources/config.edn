@@ -1,11 +1,5 @@
 {:nomad/environments
- {"dev" {:db {:subname "//localhost:5432/clojurelive_dev"
-              :user "clojurelive"
-              :password "clojurelive_dev"
-              :sslmode "disable"}
+ {"dev" {:datomic-url "datomic:dev://localhost:4334/clojurelive-dev"
          :send-emails? false}
-  "prod" {:db {:subname #nomad/env-var "DB_SUBNAME"
-               :user #nomad/env-var "DB_USER"
-               :password #nomad/env-var "DB_PASSWORD"
-               :sslmode "require"}
+  "prod" {:datomic-url ""
           :send-emails? true}}}

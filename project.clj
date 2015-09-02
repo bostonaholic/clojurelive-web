@@ -9,9 +9,8 @@
                  [ring/ring-core "1.4.0"]
                  [ring/ring-devel "1.4.0"]
                  [compojure "1.3.4"]
-                 [com.cemerick/friend "0.2.1"]
-                 [org.clojure/java.jdbc "0.3.7"]
-                 [org.postgresql/postgresql "9.4-1201-jdbc41"]
+                 [com.datomic/datomic-free "0.9.5206" :exclusions [joda-time]]
+                 [io.rkn/conformity "0.3.5" :exclusions [datomic-free]]
                  [danlentz/clj-uuid "0.1.6"]
                  [digest "1.4.4"]
                  [hiccup "1.0.5"]
@@ -20,4 +19,5 @@
   :min-lein-version "2.0.0"
   :uberjar-name "clojurelive-web-standalone.jar"
   :main clojurelive-web.core
-  :profiles {:uberjar {:aot [clojurelive-web.core]}})
+  :profiles {:uberjar {:aot [clojurelive-web.core]}}
+  :aliases {"create-db" ["run" "-m" "clojurelive-web.scripts.create-db"]})

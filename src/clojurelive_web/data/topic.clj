@@ -1,34 +1,44 @@
 (ns clojurelive-web.data.topic
-  (:require [clojure.java.jdbc :as jdbc]
-            [clojurelive-web.data.user :as user]
-            [clojurelive-web.db :as db]
-            [clj-uuid :as uuid]))
-
-(defn assoc-comments-for-topic [topic]
-  (assoc topic
-         :comments
-         (map (fn [comment] (assoc-in comment
-                                     [:submitter :username]
-                                     (:username (user/find-by-id (:users_id comment)))))
-              (jdbc/query db/conn-spec ["SELECT * FROM comments WHERE topics_id = ? ORDER BY created_at DESC" (:id topic)]))))
+  (:require [clojurelive-web.db :as db]
+            [datomic.api :as d]
+            [clj-uuid :as uuid])
+  (:import (java.net URI)))
 
 (defn for-uuid [uuid]
-  (let [topic (first (jdbc/query db/conn-spec
-                                 ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.users_id = users.id WHERE topics.uuid = ?" (uuid/as-uuid uuid)]))]
-    (assoc-comments-for-topic topic)))
+  (d/q '[:find (pull ?topic [* {:topic/submitter [*]
+                                :topic/comments [* {:comment/submitter [*]}]}]) .
+         :in $ ?uuid
+         :where
+         [?topic :topic/uuid ?uuid]]
+       (db/db)
+       (uuid/as-uuid uuid)))
 
-(defn find-by-uuid [uuid]
-  (first (jdbc/query db/conn-spec
-                     ["SELECT * FROM topics WHERE uuid = ?" (uuid/as-uuid uuid)])))
+(defn create-link [username link]
+  (let [topic-uuid (d/squuid)
+        link {:db/id (d/tempid :topics)
+              :topic/uuid topic-uuid
+              :topic/submitter [:user/username username]
+              :topic/title (:title link)
+              :topic/url (URI. (:url link))}]
+    @(d/transact @db/conn [link])
+    topic-uuid))
 
-(defn create [username topic]
-  (let [user (user/find-by-username username)
-        topic (merge topic
-                     {:uuid (uuid/v1)
-                      :created_at (java.sql.Timestamp. (.getTime (java.util.Date.)))
-                      :users_id (:id user)})]
-    (jdbc/insert! db/conn-spec :topics topic)))
+(defn create-text [username text]
+  (let [topic-uuid (d/squuid)
+        text {:db/id (d/tempid :topics)
+              :topic/uuid topic-uuid
+              :topic/submitter [:user/username username]
+              :topic/title (:title text)
+              :topic/content (:content text)}]
+    @(d/transact @db/conn [text])
+    topic-uuid))
 
 (defn newest [offset limit]
-  (jdbc/query db/conn-spec
-              ["SELECT topics.*, users.username AS submitter FROM topics LEFT JOIN users ON topics.users_id = users.id ORDER BY created_at DESC OFFSET ? LIMIT ?" offset limit]))
+  (->> (d/q '[:find [(pull ?topic [* {:topic/submitter [*]}]) ...]
+              :where
+              [?topic :topic/uuid]]
+            (db/db))
+       (sort-by :db/id)
+       (reverse)
+       (drop offset)
+       (take limit)))

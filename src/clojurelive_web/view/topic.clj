@@ -20,11 +20,11 @@
                  [:div.topic-title
                   (view/render-title topic)]
                  [:div.topic-submitter
-                  [:small (str "submitted by " (:submitter topic))]]
+                  [:small (str "submitted by " (:user/username (:topic/submitter topic)))]]
                  [:div.topic-actions
                   [:small
                    [:strong
-                    [:a {:href (str "/t/" (:uuid topic))} "comment"]]]]])]
+                    [:a {:href (str "/t/" (:topic/uuid topic))} "comment"]]]]])]
 
              view/footer
              view/google-analytics]]))
@@ -46,16 +46,16 @@
                 (view/render-title topic)]]
 
               [:div.topic-submitter
-               [:small (str "submitted by " (:submitter topic))]]
+               [:small (str "submitted by " (:user/username (:topic/submitter topic)))]]
 
               [:div.topic-content
                (view/render-content topic)]]
 
              (if (:clojurelive/username session)
-               [:form {:action (str "/t/" (:uuid topic) "/comment") :method "POST"}
+               [:form {:action (str "/t/" (:topic/uuid topic) "/comment") :method "POST"}
                 [:div.form-group
                  [:label {:for "content"} "Comment:"]
-                 [:textarea.text-content {:type "text" :name "content" :required "required"}]]
+                 [:textarea.text-content {:type "text" :name "body" :required "required"}]]
 
                 [:div.form-group
                  [:button {:type "submit"} "Submit"]]]
@@ -63,12 +63,12 @@
 
              [:div#topic-comments
               [:h3 "Comments"]
-              (for [comment (:comments topic)]
+              (for [comment (reverse (sort-by :db/id (:topic/comments topic)))]
                 [:div.comment
                  [:div.comment-submitter
-                  [:small (:username (:submitter comment))]]
+                  [:small (:user/username (:comment/submitter comment))]]
                  [:div.comment-content
-                  [:p (view/prettify (hiccup-util/escape-html (:content comment)))]]])]
+                  [:p (view/prettify (hiccup-util/escape-html (:comment/body comment)))]]])]
 
              view/footer
              view/google-analytics]]))
@@ -84,8 +84,8 @@
                [:label {:for "title"} "Title:"]
                [:input.link-title {:type "text" :name "title" :required "required"}]]
               [:div.form-group
-               [:label {:for "content"} "URL:"]
-               [:input.link-content {:type "text" :name "content" :required "required"}]]
+               [:label {:for "url"} "URL:"]
+               [:input.link-url {:type "text" :name "url" :required "required"}]]
 
               [:div.form-group
                [:button {:type "submit"} "Submit"]]]]]))

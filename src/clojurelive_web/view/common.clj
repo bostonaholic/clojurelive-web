@@ -70,17 +70,26 @@ ga('send', 'pageview');"])
 (defn prettify [content]
   (string/replace content #"(\r\n)+" "</p><p>"))
 
-(defmulti render-title :type)
-(defmethod render-title :default [_] nil)
-(defmethod render-title "link" [this]
-  [:a {:href (:content this) :target "blank"} (hiccup-util/escape-html (:title this))])
-(defmethod render-title "text" [this]
-  [:a {:href (str "/t/" (:uuid this))} (hiccup-util/escape-html (:title this))])
+(defn- topic-classifier [topic]
+  (if (:topic/url topic)
+    :link
+    :text))
 
-(defmulti render-content :type)
+(defmulti render-title topic-classifier)
+(defmethod render-title :default [_] nil)
+
+(defmethod render-title :link [this]
+  [:a {:href (:topic/url this) :target "_blank"} (hiccup-util/escape-html (:topic/title this))])
+
+(defmethod render-title :text [this]
+  [:a {:href (str "/t/" (:topic/uuid this))} (hiccup-util/escape-html (:topic/title this))])
+
+(defmulti render-content topic-classifier)
+
 (defmethod render-content :default [_]
   [:hr])
-(defmethod render-content "text" [this]
+
+(defmethod render-content :text [this]
   (list
-   [:p (prettify (hiccup-util/escape-html (:content this)))]
+   [:p (prettify (hiccup-util/escape-html (:topic/content this)))]
    [:hr]))

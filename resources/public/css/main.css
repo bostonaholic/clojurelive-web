@@ -101,7 +101,7 @@ footer {
   margin-top: -10px;
 }
 
-input.link-title, input.link-content, input.text-title {
+input.link-title, input.link-url, input.text-title {
   width: 500px;
 }
 
