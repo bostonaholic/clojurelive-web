@@ -44,7 +44,8 @@
        [:span " | "]
        [:a {:href "/login"} "Log In"]])]
    [:h1#logo
-    [:a {:href "/"} "Clojure Live"]]])
+    [:a {:href "/"} "Clojure Live"]
+    [:span#subheader "Up-to-date news on Clojure, ClojureScript, and Datomic"]]])
 
 (def footer
   [:footer

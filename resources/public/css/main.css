@@ -48,6 +48,12 @@ footer {
   margin-bottom: 50px;
 }
 
+#subheader {
+  color: #95A5A6;
+  font-size: 0.5em;
+  margin-left: 15px;
+}
+
 .site-actions {
   margin-bottom: 50px;
   float: right;
