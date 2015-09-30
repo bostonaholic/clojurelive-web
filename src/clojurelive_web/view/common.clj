@@ -52,7 +52,9 @@
    [:div.pull-right
     [:span "Made with "]
     [:span.alizarin "<3"]
-    [:span " in Clojure."]]
+    [:span " in Clojure "]
+    [:a.no-decoration {:href "https://github.com/ClojureLive" :target "_blank"}
+     [:span.fui-github]]]
    [:div.pull-left
     [:span "&copy; 2015"]]
    [:div.center

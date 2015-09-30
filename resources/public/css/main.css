@@ -13,6 +13,12 @@ a:hover {
   background: #27ae60;
 }
 
+a.no-decoration, a.no-decoration:hover {
+  color: inherit;
+  text-decoration: none;
+  background: inherit;
+}
+
 label {
   display: inline-block;
   float: left;
@@ -149,3 +155,27 @@ textarea.comment-content {
 .silver { color: #BDC3C7; }
 .concrete { color: #95A5A6; }
 .asbestos { color: #7F8C8D; }
+
+@font-face {
+  font-family: 'Flat-UI-Icons';
+
+  src: url('../fonts/glyphicons/flat-ui-icons-regular.eot');
+  src: url('../fonts/glyphicons/flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons/flat-ui-icons-regular.woff') format('woff'), url('../fonts/glyphicons/flat-ui-icons-regular.ttf') format('truetype'), url('../fonts/glyphicons/flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg');
+}
+
+[class^="fui-"],
+[class*="fui-"] {
+  font-family: 'Flat-UI-Icons';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fui-github:before {
+  content: "\e65c";
+}
