@@ -1,5 +1,5 @@
 (defproject clojurelive-web "0.1.0"
-  :description "The code that runs ClojureLive"
+  :description "The code that runs Clojure Live"
   :url "https//www.clojurelive.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}

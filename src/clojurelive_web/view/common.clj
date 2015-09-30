@@ -5,7 +5,7 @@
 
 (def head
   [:head
-   [:title "ClojureLive - Up-to-date news on Clojure, ClojureScript, and Datomic"]
+   [:title "Clojure Live - Up-to-date news on Clojure, ClojureScript, and Datomic"]
    [:meta {:name "description" :content "Up-to-date news on Clojure, ClojureScript, and Datomic"}]
    [:meta {:name "keywords" :content "clojure, clojurescript, datomic, forum"}]
    [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]

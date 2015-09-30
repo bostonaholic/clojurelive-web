@@ -9,7 +9,7 @@
 (def send-message (postmark api-token "matthew@clojurelive.com"))
 
 (defn reset-password-body [token]
-  (str "To reset your ClojureLive password, please click the link below.
+  (str "To reset your Clojure Live password, please click the link below.
 
 " (env :site-url) "/reset-password/" token "
 
@@ -17,7 +17,7 @@ If you did not request your password to be reset, please ignore this email and y
 
 (defn reset-password [email token]
   (let [message {:to email
-                 :subject "ClojureLive Password Reset"
+                 :subject "Clojure Live Password Reset"
                  :text (reset-password-body token)}]
     (if (:send-emails? (config/config))
       (send-message message)
